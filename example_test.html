@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>select2_test examples</title>
+
+<link rel="stylesheet" type="text/css" href="../dist/css/select2.css">
+<script type="text/javascript" src="../../jquery2.1.3.js"></script>
+<script type="text/javascript" src="../dist/js/select2.full.min.js"></script>
+
+<style type="text/css">
+	select{
+		width: 200px;
+		min-height: 200px;
+		max-height: 300px;
+	}
+</style>
+<script type="text/javascript">
+	$(function(){
+		function setTheSelect2Value(){
+			$(".test_2").val("2").trigger("change");  //对于单选下拉，触发下拉项中哪一个被选中。
+		}
+		function setMultipleSelect2Value(){
+			$(".test_3").val(["1","2"]).trigger("change");  //对于可多选的下拉，触发下拉项中哪几个选项被选中。
+			// $(".test_3").val(null).trigger("change");  //清楚所有被选中的下拉项。
+		}
+		function getMultipleSelect2Value(){
+			var value = $(".test_3").val();   //获得多选下拉select中已选中的所有option选项的value值。
+			console.log(value); //获得的是数组形式的所有选中值。
+		}
+		$(".test_1").select2();
+
+		$(".test_2").select2({
+			placeholder: "请选择", //注意：单选的下拉如果要显示这个属性的话必须设置allowClear:true ;不然不会显示，因为单选下拉默认会选中第一个option。只有当它可被清除的时候才会在清除后显示。
+			allowClear:true,
+			minimumResultsForSearch:3     //设置至少要达到多少个option选项时才显示搜索框。但是这个属性并不适用于有multiple属性的下拉列表。
+		});
+
+		//  有multiple属性的select下拉列表。支持多选的。
+		$(".test_3").select2({ 
+			placeholder:"请选择",  //这个属性不用多解释了，就是还没有输入文本时的提示文本。
+			maximumSelectionLength: 3,    //这个只有可多选的下拉列表（就是有multiple属性的）可用，表示可选中的最多项数。
+			tags: true,   	//支持新增标签选项，就是如果搜索文本框里搜索不到你输入的内容时可以新增这个标签内容到下拉列表里。
+			closeOnSelect:false 	//当选选择完一个选项后是否关闭下拉列表。默认是为true的。
+
+
+		});
+		$(".set_multiple_value").click(function(){
+			setMultipleSelect2Value();
+		});
+		$(".get_multiple_value").click(function(){
+			getMultipleSelect2Value();
+		});
+	});
+</script>
+</head>
+<body>
+	<br/>
+<div>
+	<button class="set_multiple_value">设置多选值</button>
+	<button class="get_multiple_value">获得已选的选项</button>
+</div>
+<div class="container">
+	<select class="test_1">
+		
+	</select>
+</div>
+<div>
+	<select class="test_2">
+		<option value="1">title1</option>
+		<option value="2">title2</option>
+		<option value="3">title3</option>
+		<option value="4">title4</option>
+	</select>
+</div>
+<!--  -->
+<div>
+<!-- 这里的data-tags属性和data-placeholder属性就是上面在js里设置的哪些属性。 -->
+<!-- 就是说在js里用select2()这个方法传入的配置参数，大部分都可以直接在标签里通过data-*的形式设置。 -->
+	<select class="test_3" data-tags="true" data-placeholder="请选择" multiple="multiple">
+		<optgroup label="ID   名字">
+			<option value="1">title1</option>
+			<option value="2">title2</option>
+			<option value="3">title3</option>
+			<option value="4">title4</option>
+			
+		</optgroup>
+	</select>
+</div>
+
+</body>
+</html>

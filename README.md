@@ -23,12 +23,16 @@
 
 3、Templating ；给下拉列表的待选结果列表和已选中区域使用自定义的html模板;
   用法： 只要给select2()方法的两个属性设置就行了，这两个属性的值分别是两个函数，下拉选项模板对应的是templateResult属性；已选中的区域对应的模板是templateSelection属性；可以设置这两个属性为同一个函数，其实最好是这样，不然选中展示的会和下拉列表里展示的不一样。
+  
 **代码模板：**
 ```javascript
   function formatState (state) {
   if (!state.id) { return state.text; }
   var $state = $(
-    '<span><img src="vendor/images/flags/' + state.element.value.toLowerCase() + '.png" class="img-flag" /> ' + state.text + '</span>'
+    '<span><img src="vendor/images/flags/' 
+    + state.element.value.toLowerCase() 
+    + '.png" class="img-flag" /> ' 
+    + state.text + '</span>'
   );
   return $state;
 };
@@ -40,9 +44,12 @@ $(".js-example-templating").select2({
 ```
 
 4、支持加载搜索远程数据。
-** html代码：***
+
+** html代码：**
 ```html
-<select class="js-data-example-ajax" name="catId"><option value="3620194" selected="selected">select2/select2</option></select>
+<select class="js-data-example-ajax" name="catId">
+	<option value="3620194" selected="selected">select2/select2</option>
+</select>
 ```
 **Javascript代码部分：**
 ```javascript

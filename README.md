@@ -43,9 +43,9 @@ $(".js-example-templating").select2({
 });
 ```
 
-4、支持加载搜索远程数据。
+4、支持加载搜索远程数据。这个其实不好支持初始化设值，更多的是用来搜索取值用。
 
-** html代码：**
+**html代码：**
 ```html
 <select class="js-data-example-ajax" name="catId">
 	<option value="3620194" selected="selected">select2/select2</option>
@@ -58,17 +58,16 @@ $(".js-data-example-ajax").select2({
 		        url: "/opms/category/list.json",
 		        dataType: 'json',
 		        delay: 250,
-		        data: function (params) {
+		        data: function (params) { ///获取查询对象参数。
 		          return {
-		            name: params.term, // search term
-		            limit: 999
+		            name: params.term, // 这个是直接获取输入文本框里的查询参数。
+		            limit: 999    // 这是给查询接口加一些其他字段的参数。
 		            // page: params.page
 		          };
 		        },
+		        ///处理查询结果，其中data就是后端返回的结果，有可能要自己重新解析一下。
+		        ///page参数就是原来的查询参数对象。
 		        processResults: function (data, page) {
-		          // parse the results into the format expected by Select2.
-		          // since we are using custom formatting functions we do not need to
-		          // alter the remote JSON data
 		          console.log(data);
 		          console.log(page);
 		          var res = [];
@@ -76,8 +75,8 @@ $(".js-data-example-ajax").select2({
 		          	res = data.data.list;
 		          }
 		          return {
-		            results: res,
-		            pagination: {
+		            results: res, ///返回给select2组件的结果数据，是一个对象数组。
+		            pagination: {  ///控制是否分页显示结果。这里后端会返回页数和总个数。
 			            more: (data.data.pageNum * 30) < data.data.totalCount
 			          }
 		          };
@@ -86,9 +85,11 @@ $(".js-data-example-ajax").select2({
 		      },
 		      escapeMarkup: function (markup) { return markup; }, // let our custom formatter work
 		      minimumInputLength: 1,
-		      templateResult: formatRepo, // omitted for brevity, see the source of this page
-		      templateSelection: formatRepoSelection // omitted for brevity, see the source of this page
+		      templateResult: formatRepo, // 下拉列表里带选择结果的模板函数。
+		      templateSelection: formatRepoSelection // 已选择出的结果显示的模板函数。
 		    });
+		    	///这个是控制下拉列表显示的模板。
+		    	////这里的参数就是后端返回的每一个数据对象。里面包含很多参数字段。
 			function formatRepo (repo) {
 			    if (repo.loading) return repo.text;
 
@@ -108,6 +109,7 @@ $(".js-data-example-ajax").select2({
 
 			    return markup;
 			}
+			///这个是控制在最上面已选中的结果显示的模板。
 			function formatRepoSelection (repo) {
 				return repo.aliasName || repo.text;
 			}

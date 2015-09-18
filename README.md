@@ -1,7 +1,7 @@
 # select2
 ##jquery插件select2的学习解析
 
-1、最简单的使用；
+####1、最简单的使用；
   $(document).ready(function() {
   $(".js-example-basic-single").select2();
 });
@@ -11,7 +11,7 @@
   <option value="2">Wyoming</option>
 </select>
 
-2、Multiple select boxes ：可多选的下拉列表。
+####2、Multiple select boxes ：可多选的下拉列表。
   用法：只要给select标签加一个multiple属性，如下代码所示；
   ```html
   <select class="js-example-basic-multiple" multiple="multiple">
@@ -21,7 +21,7 @@
 </select>
 ```
 
-3、Templating ；给下拉列表的待选结果列表和已选中区域使用自定义的html模板;
+####3、Templating ；给下拉列表的待选结果列表和已选中区域使用自定义的html模板;
   用法： 只要给select2()方法的两个属性设置就行了，这两个属性的值分别是两个函数，下拉选项模板对应的是templateResult属性；已选中的区域对应的模板是templateSelection属性；可以设置这两个属性为同一个函数，其实最好是这样，不然选中展示的会和下拉列表里展示的不一样。
   
 **代码模板：**
@@ -43,7 +43,7 @@ $(".js-example-templating").select2({
 });
 ```
 
-4、支持加载搜索远程数据。这个其实不好支持初始化设值，更多的是用来搜索取值用。
+####4、支持加载搜索远程数据。这个其实不好支持初始化设值，更多的是用来搜索取值用。
 
 **html代码：**
 ```html
